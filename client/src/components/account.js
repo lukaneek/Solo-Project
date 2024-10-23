@@ -21,11 +21,15 @@ function Account(props) {
     useEffect(() => {
         console.log("in pizzas useEffect");
         axios.post("http://localhost:8000/pizzas", {
-            email
+            email, 
         })
         .then((res) => {
             console.log(res.data.pizzas);
             setPizzas(res.data.pizzas);
+            setNewEmail(res.data.email);
+            setCity(res.data.city);
+            setState(res.data.state);
+            setAddress(res.data.address);
         })
         .catch((err) => {
             console.log(err);
@@ -121,27 +125,27 @@ function Account(props) {
                     <form class action="PUT">
 
                         <div data-mdb-input-init class="form-outline mb-2">
-                            <input type="email" id="form2Example1" onChange={(e) => { setNewEmail(e.target.value) }} class="form-control" />
+                            <input type="email" value={newEmail} id="form2Example1" onChange={(e) => { setNewEmail(e.target.value) }} class="form-control" />
                             <label class="form-label" for="form2Example1">Email address</label>
                         </div>
 
                         <div data-mdb-input-init class="form-outline mb-2">
-                            <input type="password" id="form2Example2" onChange={(e) => { setPassword(e.target.value) }} class="form-control" />
+                            <input type="text" placeholder="Your Password:" id="form2Example2" onChange={(e) => { setPassword(e.target.value) }} class="form-control" />
                             <label class="form-label" for="form2Example2">Password</label>
                         </div>
 
                         <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="text" id="form2Example2" onChange={(e) => { setCity(e.target.value) }} class="form-control" />
+                            <input type="text" value={city} id="form2Example2" onChange={(e) => { setCity(e.target.value) }} class="form-control" />
                             <label class="form-label" for="form2Example2">City</label>
                         </div>
 
                         <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="text" id="form2Example2" onChange={(e) => { setState(e.target.value) }} class="form-control" />
+                            <input type="text" value={state} id="form2Example2" onChange={(e) => { setState(e.target.value) }} class="form-control" />
                             <label class="form-label" for="form2Example2">State</label>
                         </div>
 
                         <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="text" id="form2Example2" onChange={(e) => { setAddress(e.target.value) }} class="form-control" />
+                            <input type="text" value={address} id="form2Example2" onChange={(e) => { setAddress(e.target.value) }} class="form-control" />
                             <label class="form-label" for="form2Example2">Address</label>
                         </div>
                         <div class=" d-flex justify-content-center align-items-center">
@@ -159,11 +163,11 @@ function Account(props) {
             </div>
             <div>
                 <div>
-                    
+                    <h2>Previous Orders:</h2>
                         {
                             pizzas.map((pizza, index) => (
                                 <ul class="list-group-item" key={index}>
-                                    <h2>Previous Orders:</h2>
+                                    <h2>Pizza:</h2>
                                     <li>{pizza.toppings.join(", ")}</li>
                                     <li>{pizza.crust}</li>
                                     <li>{pizza.size}</li>
